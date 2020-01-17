@@ -17,11 +17,23 @@ Route::group(['middleware' => ['auth']], function () {
         return view('list_user');
     });
     Route::get('list_user_data', 'AdminController@listUsers');
+
     Route::get('/users/{id}/edit', 'AdminController@editUser')->name('users.edit');
     Route::put('users/{id}', 'AdminController@updateUser')->name('users.update');
     Route::delete('users/{id}', 'AdminController@destroyUser')->name('users.destroy');
+
     Route::get('/profile', 'AdminController@editProfile')->name('profile.edit');
     Route::put('/profile/update', 'AdminController@updateProfile')->name('profile.update');
 
+    Route::get('tnc/create', function () {
+        return view('tnc_create');
+    });
+    Route::post('tnc/create', 'TncController@create')->name('tnc_create');
 
+    Route::get('tnc/{id}', 'TncController@show');
+
+    Route::get('tncs', function () {
+        return view('list_tnc');
+    });
+    Route::get('list_tnc_data', 'TncController@listTncs');
 });

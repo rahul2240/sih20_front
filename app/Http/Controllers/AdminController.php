@@ -41,17 +41,18 @@ class AdminController extends Controller
                 return '<a href="'.url('user/'.$u->id).'" target="_blank"><u>'.$u->name.'</u><a>';
             })
             ->editColumn('created_at', function (User $u) {
-            	return $u->created_at->diffForHumans();
+                return $u->created_at->diffForHumans();
             })
             ->addColumn('action', function (User $u) {
-            	if($u->id != Auth::id())
-                	return '<a href="'.route('users.edit', $u->id).'" target="_blank" class="btn btn-primary">
+                if ($u->id != Auth::id()) {
+                    return '<a href="'.route('users.edit', $u->id).'" target="_blank" class="d-inline btn btn-primary">
                 	<i class="fas fa-pencil-alt mr-1"></i> Edit</a> &nbsp;
-                	<form action="'.route('users.destroy', $u->id).'" method="POST">'.
-                    	csrf_field().'
+                	<form action="'.route('users.destroy', $u->id).'" method="POST" class="d-inline-block">
+                    	'.csrf_field().'
                     	<input type="hidden" name="_method" value="DELETE">
-                    	<button class="btn btn-danger">Delete</button>
+                    	<button class="btn btn-danger"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
                 	</form>';
+                }
             })
             ->rawColumns([
                 'name',
@@ -60,57 +61,62 @@ class AdminController extends Controller
             ->make(true);
     }
 
-    public function editUser($id){
-    	$user = User::find($id);
-    	if(isset($user)){
-    		return view('edit_user', compact('user'));
-    	}
+    public function editUser($id)
+    {
+        $user = User::find($id);
+        if (isset($user)) {
+            return view('edit_user', compact('user'));
+        }
     }
 
-    public function updateUser(Request $request, $id){
-    	$user = User::find($id);
-    	$data = $request->all();
-    	$vaidatedData = $request->validate([
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::find($id);
+        $data = $request->all();
+        $vaidatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
-    	if(isset($user)){
-    		$user->name = $data['name'];
-    		$user->password = Hash::make($data['password']);
+        if (isset($user)) {
+            $user->name = $data['name'];
+            $user->password = Hash::make($data['password']);
             $user->is_admin = isset($data['super_admin']) ? 1 : 0;
             $user->save();
-    	}
-    	return back();
+        }
+        return back()->with(['msg' =>'User details has been updated successfully', 'class' => 'alert-success']);
     }
 
-    public function destroyUser($id){
-    	$user  = User::find($id);
-    	if(isset($user)){
-    		$user->delete();
-    	}
-    	return back();
+    public function destroyUser($id)
+    {
+        $user  = User::find($id);
+        if (isset($user)) {
+            $user->delete();
+        }
+        return back()->with(['msg' =>'User deleted successfully', 'class' => 'alert-success']);
     }
 
-    public function editProfile(){
-    	$user = Auth::user();
-    	return view('edit_profile', compact('user'));
+    public function editProfile()
+    {
+        $user = Auth::user();
+        return view('edit_profile', compact('user'));
     }
 
-    public function updateProfile(Request $request){
-    	$user = Auth::user();
-    	$data = $request->all();
-    	if (Hash::check($data['password_old'], $user->password)) {
-	    	$vaidatedData = $request->validate([
-	            'name' => ['required', 'string', 'max:255'],
-	            'password' => ['required', 'string', 'min:8', 'confirmed'],
-	            ]);
-	    	if(isset($user)){
-	    		$user->name = $data['name'];
-	    		$user->password = Hash::make($data['password']);
-	            $user->is_admin = isset($data['super_admin']) ? 1 : 0;
-	            $user->save();
-	    	}
-	    }
-    	return back();
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->all();
+        if (Hash::check($data['password_old'], $user->password)) {
+            $vaidatedData = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                ]);
+            if (isset($user)) {
+                $user->name = $data['name'];
+                $user->password = Hash::make($data['password']);
+                $user->is_admin = isset($data['super_admin']) ? 1 : 0;
+                $user->save();
+            }
+        }
+        return back()->with(['msg' =>'Profile updated successfully', 'class' => 'alert-success']);
     }
 }
