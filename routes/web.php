@@ -17,4 +17,11 @@ Route::group(['middleware' => ['auth']], function () {
         return view('list_user');
     });
     Route::get('list_user_data', 'AdminController@listUsers');
+    Route::get('/users/{id}/edit', 'AdminController@editUser')->name('users.edit');
+    Route::put('users/{id}', 'AdminController@updateUser')->name('users.update');
+    Route::delete('users/{id}', 'AdminController@destroyUser')->name('users.destroy');
+    Route::get('/profile', 'AdminController@editProfile')->name('profile.edit');
+    Route::put('/profile/update', 'AdminController@updateProfile')->name('profile.update');
+
+
 });
