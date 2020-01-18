@@ -36,4 +36,10 @@ Route::group(['middleware' => ['auth']], function () {
         return view('list_tnc');
     });
     Route::get('list_tnc_data', 'TncController@listTncs');
+    Route::get('/tncs/{id}/edit', 'TncController@editTnc')->name('tncs.edit');
+    Route::put('tncs/{id}', 'TncController@updateTnc')->name('tncs.update');
+    Route::delete('tncs/{id}', 'TncController@destroyTnc')->name('tncs.destroy');
+
+    Route::post('tnc/{id}/access', 'TncController@grantAccess')->name('access.grant');
+
 });

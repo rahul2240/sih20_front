@@ -14,4 +14,5 @@
 <!-- Material Design Bootstrap -->
 <link href="{{ url('css/mdb.css') }}" rel="stylesheet">
 <link href="{{ url('css/style.css') }}" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 @yield('css')

@@ -7,6 +7,7 @@ use App\Access;
 use App\Tnc;
 use Auth;
 use DataTables;
+use App\User;
 
 class TncController extends Controller
 {
@@ -49,6 +50,7 @@ class TncController extends Controller
     public function show($id)
     {
         $access = Access::select('access')->where('user_id', Auth::id())->where('tnc_id', $id)->first()->access;
+        $users = User::where('id', '<>', Auth::id())->get();
         $tnc = Tnc::find($id);
         $padID = $tnc->pad_id;
         if ($access == 2 || $access == 3) {
@@ -66,6 +68,8 @@ class TncController extends Controller
             'access' => $access,
             'padID' => $padID,
             'title' => $tnc->title,
+            'users' => $users,
+            'tnc_id'   => $id,
         ]);
     }
 
@@ -79,9 +83,9 @@ class TncController extends Controller
                 return $t->created_at->diffForHumans();
             })
             ->addColumn('action', function (Tnc $t) {
-                return '<a href="'.route('users.edit', $t->id).'" target="_blank" class="d-inline btn btn-primary">
+                return '<a href="'.route('tncs.edit', $t->id).'" target="_blank" class="d-inline btn btn-primary">
             	<i class="fas fa-pencil-alt mr-1"></i> Edit Title</a> &nbsp;
-            	<form action="'.route('users.destroy', $t->id).'" method="POST" class="d-inline-block">
+            	<form action="'.route('tncs.destroy', $t->id).'" method="POST" class="d-inline-block">
                 	'.csrf_field().'
                 	<input type="hidden" name="_method" value="DELETE">
                 	<button class="btn btn-danger"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
@@ -92,5 +96,48 @@ class TncController extends Controller
                 'action'
             ])
             ->make(true);
+    }
+
+    public function editTnc($id)
+    {
+        $tnc = Tnc::find($id);
+        if (isset($tnc)) {
+            return view('tnc_edit', compact('tnc'));
+        }
+    }
+
+    public function updateTnc(Request $request, $id)
+    {
+        $tnc = Tnc::find($id);
+        $data = $request->all();
+        $vaidatedData = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            ]);
+        if (isset($tnc)) {
+            $tnc->title = $data['title'];
+            $tnc->save();
+        }
+        return redirect(url('/tncs'))->with(['msg' =>'Tnc details has been updated successfully', 'class' => 'alert-success']);
+    }
+
+    public function destroyTnc($id)
+    {
+        $tnc  = Tnc::find($id);
+        if (isset($tnc)) {
+            $tnc->delete();
+        }
+        return back()->with(['msg' =>'Tnc deleted successfully', 'class' => 'alert-success']);
+    }
+
+    public function grantAccess(Request $request, $id){
+        Access::where('tnc_id', $id)->whereIn('user_id', $request->users)->delete();
+        foreach ($request->users as $user_id) {
+            $access = new Access;
+            $access->tnc_id = $id;
+            $access->user_id = $user_id;
+            $access->access = $request->access;
+            $access->save();
+        }
+        return back()->with(['msg' =>'Tnc access rights has been updated successfully', 'class' => 'alert-success']);
     }
 }

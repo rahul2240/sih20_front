@@ -164,4 +164,5 @@
 <script type="text/javascript" src="{{ url('js/bootstrap.min.js') }}"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{{ url('js/mdb.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 @yield('script')
