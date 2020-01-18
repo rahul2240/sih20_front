@@ -50,7 +50,13 @@ class TncController extends Controller
     public function show($id)
     {
         $access = Access::select('access')->where('user_id', Auth::id())->where('tnc_id', $id)->first()->access;
-        $users = User::where('id', '<>', Auth::id())->get();
+        $users = User::where('id', '<>', Auth::id());
+        $user_ids = $users->pluck('id')->toArray();
+
+        $user_ids_with_access = Access::where('tnc_id', $id)->pluck('user_id')->toArray();
+        $user_ids_not_given_access = array_diff($user_ids, $user_ids_with_access);
+        $users_not_given_access = User::where('id', '<>', Auth::id())->whereIn('id', $user_ids_not_given_access)->get();
+        $users_with_access = $users->whereIn('id', $user_ids_with_access)->get();
         $tnc = Tnc::find($id);
         $padID = $tnc->pad_id;
         if ($access == 2 || $access == 3) {
@@ -68,7 +74,8 @@ class TncController extends Controller
             'access' => $access,
             'padID' => $padID,
             'title' => $tnc->title,
-            'users' => $users,
+            'users_not_given_access' => $users_not_given_access,
+            'users_with_access' => $users_with_access,
             'tnc_id'   => $id,
         ]);
     }
@@ -130,13 +137,21 @@ class TncController extends Controller
     }
 
     public function grantAccess(Request $request, $id){
-        Access::where('tnc_id', $id)->whereIn('user_id', $request->users)->delete();
-        foreach ($request->users as $user_id) {
-            $access = new Access;
-            $access->tnc_id = $id;
-            $access->user_id = $user_id;
-            $access->access = $request->access;
-            $access->save();
+        if(isset($request->users)){
+            foreach ($request->users as $user_id) {
+                $access = new Access;
+                $access->tnc_id = $id;
+                $access->user_id = $user_id;
+                $access->access = $request->access;
+                $access->save();
+            }
+        }
+        return back()->with(['msg' =>'Tnc access rights has been updated successfully', 'class' => 'alert-success']);
+    }
+
+    public function updateAccess(Request $request, $id){
+        foreach ($request->access as $user_id => $access_id) {
+            $access = Access::where('tnc_id', $id)->where('user_id', $user_id)->update(['access' => $access_id]);
         }
         return back()->with(['msg' =>'Tnc access rights has been updated successfully', 'class' => 'alert-success']);
     }

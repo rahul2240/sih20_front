@@ -41,5 +41,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('tncs/{id}', 'TncController@destroyTnc')->name('tncs.destroy');
 
     Route::post('tnc/{id}/access', 'TncController@grantAccess')->name('access.grant');
+    Route::put('tncs/{id}/access', 'TncController@updateAccess')->name('accesses.update');
 
 });
