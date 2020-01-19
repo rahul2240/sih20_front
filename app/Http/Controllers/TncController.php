@@ -11,7 +11,6 @@ use App\User;
 
 class TncController extends Controller
 {
-
     public function create(Request $request)
     {
         $vaidatedData = $request->validate([
@@ -136,8 +135,9 @@ class TncController extends Controller
         return back()->with(['msg' =>'Tnc deleted successfully', 'class' => 'alert-success']);
     }
 
-    public function grantAccess(Request $request, $id){
-        if(isset($request->users)){
+    public function grantAccess(Request $request, $id)
+    {
+        if (isset($request->users)) {
             foreach ($request->users as $user_id) {
                 $access = new Access;
                 $access->tnc_id = $id;
@@ -149,7 +149,8 @@ class TncController extends Controller
         return back()->with(['msg' =>'Tnc access rights has been updated successfully', 'class' => 'alert-success']);
     }
 
-    public function updateAccess(Request $request, $id){
+    public function updateAccess(Request $request, $id)
+    {
         foreach ($request->access as $user_id => $access_id) {
             $access = Access::where('tnc_id', $id)->where('user_id', $user_id)->update(['access' => $access_id]);
         }
