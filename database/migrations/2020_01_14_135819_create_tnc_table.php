@@ -16,8 +16,8 @@ class CreateTncTable extends Migration
         Schema::create('tnc', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('pad_id')->nullable()->default(NULL);
-            $table->string('pad_read_id')->nullable()->default(NULL);
+            $table->string('pad_id')->nullable()->default(null);
+            $table->string('pad_read_id')->nullable()->default(null);
             $table->bigInteger('user_id');
             $table->timestamps();
         });

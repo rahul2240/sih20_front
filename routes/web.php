@@ -42,5 +42,4 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('tnc/{id}/access', 'TncController@grantAccess')->name('access.grant');
     Route::put('tncs/{id}/access', 'TncController@updateAccess')->name('accesses.update');
-
 });
