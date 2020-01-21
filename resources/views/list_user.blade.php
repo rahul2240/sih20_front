@@ -37,6 +37,15 @@
        ]
    });
 });
+$(document).ready(function(){
+  $( "#delete_user_button" ).click(function( event ) {
+    console.log('hi');
+     if(!confirm("Do you really want to do this?")) {
+     return false;
+    }
+    this.form.submit();
+  });
+});
 </script>
 
 @endsection

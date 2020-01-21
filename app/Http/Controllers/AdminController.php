@@ -47,10 +47,10 @@ class AdminController extends Controller
                 if ($u->id != Auth::id()) {
                     return '<a href="'.route('users.edit', $u->id).'" target="_blank" class="d-inline btn btn-primary">
                 	<i class="fas fa-pencil-alt mr-1"></i> Edit</a> &nbsp;
-                	<form action="'.route('users.destroy', $u->id).'" method="POST" class="d-inline-block">
+                	<form action="'.route('users.destroy', $u->id).'" method="POST" class="d-inline-block" id="delete_user">
                     	'.csrf_field().'
                     	<input type="hidden" name="_method" value="DELETE">
-                    	<button class="btn btn-danger"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
+                    	<button class="btn btn-danger" id="delete_user_button"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
                 	</form>';
                 }
             })

@@ -2,7 +2,7 @@
 <footer class="page-footer font-small unique-color-dark">
 
     <!-- Footer Links -->
-    <div class="container text-center text-md-left">
+    {{-- <div class="container text-center text-md-left">
 
       <!-- Grid row -->
       <div class="row">
@@ -99,9 +99,9 @@
       </div>
       <!-- Grid row -->
 
-    </div>
+    </div> --}}
     <!-- Footer Links -->
-
+{{-- 
     <hr>
 
     <!-- Call to action -->
@@ -116,9 +116,43 @@
     <!-- Call to action -->
 
     <hr>
+ --}}
+ <!-- Footer Text -->
+  <div class="container-fluid text-center text-md-left mt-4">
 
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mt-md-0 mt-3">
+
+        <!-- Content -->
+        <h5 class="text-uppercase font-weight-bold mt-4">About GeM</h5>
+        <p>Hon'ble Prime Minister, based on recommendations of the Group of Secretaries, decided to set up a dedicated e market for different goods & services procured by Government Organisations / Departments / PSUs. This meant transforming DGS&D to a digital ecommerce portal for procurement and selling of goods and services.</p>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mb-md-0 mb-3">
+
+        <!-- Content -->
+        <h5 class="text-uppercase font-weight-bold mt-4">Vision</h5>
+        <p>To affect an evolution in public procurement promoting a transparent, efficient and inclusive marketplace.
+        </p>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Text -->
     <!-- Social buttons -->
-    <ul class="list-unstyled list-inline text-center">
+    {{-- <ul class="list-unstyled list-inline text-center">
       <li class="list-inline-item">
         <a class="btn-floating btn-fb mx-1">
           <i class="fab fa-facebook-f"> </i>
@@ -144,7 +178,7 @@
           <i class="fab fa-dribbble"> </i>
         </a>
       </li>
-    </ul>
+    </ul> --}}
     <!-- Social buttons -->
 
     <!-- Copyright -->

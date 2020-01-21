@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Tnc;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $users=User::all();
+        $terms=Tnc::all();
+        $cont=User::count();
+        $contt=Tnc::count();
+        return view('home', compact('users','terms','cont','contt'));
     }
 }
