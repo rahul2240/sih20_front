@@ -58,7 +58,7 @@ class TncController extends Controller
         $users_with_access = $users->whereIn('id', $user_ids_with_access)->get();
         $tnc = Tnc::find($id);
         $padID = $tnc->pad_id;
-        if ($access == 2 || $access == 3) {
+        if ($access == 2 || $access == 3 || Auth::user()->is_admin == 1) {
             $etherpad = new \EtherpadLite\Client(config('etherpad.api_key'), config('etherpad.url'));
             $authorID = $etherpad->createAuthorIfNotExistsFor(Auth::id(), Auth()->user()->name)->getData('authorID');
             $groupID = $etherpad->createGroupIfNotExistsFor($id)->getData('groupID');
@@ -81,7 +81,12 @@ class TncController extends Controller
 
     public function listTncs()
     {
-        return Datatables::of(Tnc::query())
+        if(Auth::user()->is_admin != 1) {
+            $tnc = Tnc::whereIn('id', Access::select('tnc_id')->where('user_id', Auth::id())->get()->toArray())->get();
+        } else {
+            $tnc = Tnc::get();
+        }
+        return Datatables::of($tnc)
             ->editColumn('title', function (Tnc $t) {
                 return '<a href="'.url('tnc/'.$t->id).'" target="_blank"><u>'.$t->title.'</u><a>';
             })
