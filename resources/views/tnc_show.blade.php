@@ -75,7 +75,7 @@
 		    </div>
 
 		<div class="embed-responsive embed-responsive-16by9">
-			<iframe allow=”microphone camera” class="embed-responsive-item iframe" src="{{ config('etherpad.url') }}/p/{{ $padID }}" allowfullscreen></iframe>
+			<iframe allow="geolocation; microphone; camera" class="embed-responsive-item iframe" src="{{ config('etherpad.url') }}/p/{{ $padID }}" allowfullscreen></iframe>
 		</div>
 	</div>
 </div>

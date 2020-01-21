@@ -144,6 +144,9 @@
                         </span>
                     @enderror
                   </div>
+                  <div class="text-center"> 
+                    <button class="btn purple-gradient btn-lg">Log In</button>   
+                  </div>
                 </form>
 
               </div>
