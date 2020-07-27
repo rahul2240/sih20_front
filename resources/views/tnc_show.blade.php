@@ -61,6 +61,7 @@
 		            			<select class="js-example-basic-single" style="width: 20%" name="access[{{ $user->id }}]">
 		            				<option value="2">Can edit</option>
 		            				<option value="1">Can read</option>
+		            				<option value="0">Remove</option>
 		            			</select>
 		           			</p>
 		            		@endforeach

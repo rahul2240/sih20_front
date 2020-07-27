@@ -81,7 +81,7 @@ class TncController extends Controller
 
     public function listTncs()
     {
-        if(Auth::user()->is_admin != 1) {
+        if (Auth::user()->is_admin != 1) {
             $tnc = Tnc::whereIn('id', Access::select('tnc_id')->where('user_id', Auth::id())->get()->toArray())->get();
         } else {
             $tnc = Tnc::get();
@@ -157,7 +157,12 @@ class TncController extends Controller
     public function updateAccess(Request $request, $id)
     {
         foreach ($request->access as $user_id => $access_id) {
-            $access = Access::where('tnc_id', $id)->where('user_id', $user_id)->update(['access' => $access_id]);
+            $access = Access::where('tnc_id', $id)->where('user_id', $user_id);
+            if ($access_id == 0) {
+                $access->delete();
+            } else {
+                $access->update(['access' => $access_id]);
+            }
         }
         return back()->with(['msg' =>'Tnc access rights has been updated successfully', 'class' => 'alert-success']);
     }
