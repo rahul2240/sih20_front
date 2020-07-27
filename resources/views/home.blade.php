@@ -60,7 +60,7 @@
                     
 
                     
-                    <td><a href="tnc/{id}">{{ $term->title }}</a></td>
+                    <td><a href="tnc/{{$term->id}}">{{ $term->title }}</a></td>
                     <br>
                     @endforeach
                   </tr>

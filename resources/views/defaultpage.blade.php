@@ -17,7 +17,6 @@
   <style type="text/css">
     html,
     body,
-    header,
     .carousel {
       height: 60vh;
     }
@@ -26,7 +25,6 @@
 
       html,
       body,
-      header,
       .carousel {
         height: 100vh;
       }
@@ -36,7 +34,6 @@
 
       html,
       body,
-      header,
       .carousel {
         height: 100vh;
       }
@@ -55,7 +52,7 @@
 
   <header>
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+    <nav style="background-color: #929FBA;" class="navbar navbar-expand-lg navbar-dark scrolling-navbar">
       <div class="container">
         <a class="navbar-brand" href="#"><img src="https://assets-bg.gem.gov.in/resources/images/gem-new-logo-v3.svg"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
@@ -66,7 +63,7 @@
       <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/login">Signup/Login
+        <a class="nav-link" href="/login">Login
           
         </a>
       </li>
@@ -75,6 +72,13 @@
     </div>
   </nav>
     <!-- Navbar -->
+
+  </header>
+
+  <!--Main layout-->
+  <main>
+
+
 
     <!--Carousel Wrapper-->
     <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
@@ -153,10 +157,6 @@
     </div>
     <!--/.Carousel Wrapper-->
 
-  </header>
-
-  <!--Main layout-->
-  <main>
     <div class="container">
 
       <!--Section: Main info-->
