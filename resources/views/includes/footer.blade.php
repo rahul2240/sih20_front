@@ -118,7 +118,7 @@
     <hr>
  --}}
  <!-- Footer Text -->
-  <div class="container-fluid text-center text-md-left mt-4">
+  <div class="container text-center text-md-left">
 
     <!-- Grid row -->
     <div class="row">

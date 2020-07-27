@@ -1,9 +1,14 @@
 <?php
 
+
 Route::get('/', function () {
+    return view('defaultpage');
+});
+
+Route::get('/login', function () {
     return view('login');
 })->name('login');
-Route::post('/', 'Auth\LoginController@login');
+Route::post('/login', 'Auth\LoginController@login');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

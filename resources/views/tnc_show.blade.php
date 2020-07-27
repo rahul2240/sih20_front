@@ -75,8 +75,8 @@
 		      </div>
 		    </div>
 
-		<div class="embed-responsive embed-responsive-16by9">
-			<iframe allow="geolocation; microphone; camera" class="embed-responsive-item iframe" src="{{ config('etherpad.url') }}/p/{{ $padID }}" allowfullscreen></iframe>
+		<div>
+			<iframe allow="geolocation; microphone; camera" src="{{ config('etherpad.url') }}/p/{{ $padID }}" allowfullscreen style="width: 100%;border: none"></iframe>
 		</div>
 	</div>
 </div>
@@ -88,6 +88,7 @@
 	$(document).ready(function() {
     	$('.js-example-basic-multiple').select2();
     	$('.js-example-basic-single').select2();
+    	$('iframe').css('height', $(window).height());
 	});
 	function myfunction(){
 		$('#basicExampleModal').modal('hide');
